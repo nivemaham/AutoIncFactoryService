@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- This file was auto-generated from WSDL --><!-- by the Apache Axis2 version: 1.6.2  Built on : Apr 17, 2012 (05:33:49 IST) --><serviceGroup>
+    <service name="AutoIncOrderProcess">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="com.autoinc.order.process.autoincorderprocess.AutoIncOrderProcessMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">com.autoinc.order.process.autoincorderprocess.AutoIncOrderProcessSkeleton</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="updateOrder" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://process.order.autoinc.com/AutoIncOrderProcess/">
+            <actionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/updateOrder</actionMapping>
+            <outputActionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/updateOrderResponse</outputActionMapping>
+        </operation>
+        <operation name="findCheapestSupplier" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://process.order.autoinc.com/AutoIncOrderProcess/">
+            <actionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/findCheapestSupplier</actionMapping>
+            <outputActionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/findCheapestSupplierResponse</outputActionMapping>
+            <faultActionMapping faultName="fault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/findCheapestSupplier/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="FindCheapestSupplierFault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/findCheapestSupplier/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="FindCheapestSupplierFault_Exception">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/findCheapestSupplier/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="findCheapestSupplierFault">urn:findCheapestSupplierfindCheapestSupplierFault</faultActionMapping>
+        </operation>
+        <operation name="createOrder" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://process.order.autoinc.com/AutoIncOrderProcess/">
+            <actionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/createOrder</actionMapping>
+            <outputActionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/createOrderResponse</outputActionMapping>
+            <faultActionMapping faultName="fault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/createOrder/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="CreateOrderFault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/createOrder/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="CreateOrderFault_Exception">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/createOrder/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="createOrderFault">urn:createOrdercreateOrderFault</faultActionMapping>
+        </operation>
+        <operation name="cancelOrder" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://process.order.autoinc.com/AutoIncOrderProcess/">
+            <actionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/cancelOrder</actionMapping>
+            <outputActionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/cancelOrderResponse</outputActionMapping>
+        </operation>
+        <operation name="registerUser" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://process.order.autoinc.com/AutoIncOrderProcess/">
+            <actionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/registerUser</actionMapping>
+            <outputActionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/registerUserResponse</outputActionMapping>
+            <faultActionMapping faultName="fault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/registerUser/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="RegisterUserFault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/registerUser/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="RegisterUserFault_Exception">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/registerUser/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="registerUserFault">urn:registerUserregisterUserFault</faultActionMapping>
+        </operation>
+        <operation name="updateOrderStatus" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://process.order.autoinc.com/AutoIncOrderProcess/">
+            <actionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/updateOrderStatus</actionMapping>
+            <outputActionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/updateOrderStatusResponse</outputActionMapping>
+            <faultActionMapping faultName="fault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/updateOrderStatus/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="UpdateOrderStatusFault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/updateOrderStatus/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="UpdateOrderStatusFault_Exception">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/updateOrderStatus/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="updateOrderStatusFault">urn:updateOrderStatusupdateOrderStatusFault</faultActionMapping>
+        </operation>
+        <operation name="showtotalCost" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://process.order.autoinc.com/AutoIncOrderProcess/">
+            <actionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/showtotalCost</actionMapping>
+            <outputActionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/showtotalCostResponse</outputActionMapping>
+            <faultActionMapping faultName="fault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/showtotalCost/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="ShowtotalCostFault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/showtotalCost/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="ShowtotalCostFault_Exception">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/showtotalCost/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="showtotalCostFault">urn:showtotalCostshowtotalCostFault</faultActionMapping>
+        </operation>
+        <operation name="registerCustomer" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://process.order.autoinc.com/AutoIncOrderProcess/">
+            <actionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/registerCustomer</actionMapping>
+            <outputActionMapping>http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/registerCustomerResponse</outputActionMapping>
+            <faultActionMapping faultName="fault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/registerCustomer/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="RegisterCustomerFault">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/registerCustomer/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="RegisterCustomerFault_Exception">http://process.order.autoinc.com/AutoIncOrderProcess/AutoIncOrderProcess/registerCustomer/Fault/fault</faultActionMapping>
+            <faultActionMapping faultName="registerCustomerFault">urn:registerCustomerregisterCustomerFault</faultActionMapping>
+        </operation>
+    </service>
+</serviceGroup>

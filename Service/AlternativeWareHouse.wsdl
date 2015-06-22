@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="AlternativeWareHouse" targetNamespace="http://www.alternative.com/AlternativeWareHouse/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.alternative.com/AlternativeWareHouse/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.alternative.com/AlternativeWareHouse/">
+      <xsd:element name="checkAvailability">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="productId" type="xsd:int"/>
+          	<xsd:element name="quantity" type="xsd:int"/>
+
+          	<xsd:element name="customerid" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="checkAvailabilityResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="isAvailable" type="xsd:boolean"/>
+          	<xsd:element name="availabilityType" type="xsd:string"/>
+          	<xsd:element name="customerid" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="checkAvailabilityFault">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="checkAvailabilityFault" type="xsd:string">
+      			</xsd:element>
+      			<xsd:element name="customerid" type="xsd:string"/>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="checkAvailabilityRequest">
+    <wsdl:part name="parameters" element="tns:checkAvailability">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkAvailabilityResponse">
+    <wsdl:part name="parameters" element="tns:checkAvailabilityResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkAvailabilityFault">
+    <wsdl:part name="parameters" element="tns:checkAvailabilityFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AlternativeWareHouse">
+    <wsdl:operation name="checkAvailability">
+      <wsdl:input message="tns:checkAvailabilityRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:checkAvailabilityResponse">
+    </wsdl:output>
+      <wsdl:fault name="fault" message="tns:checkAvailabilityFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AlternativeWareHouseSOAP" type="tns:AlternativeWareHouse">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="checkAvailability">
+      <soap:operation soapAction="http://www.alternative.com/AlternativeWareHouse/checkAvailability"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AlternativeWareHouse">
+    <wsdl:port name="AlternativeWareHouseSOAP" binding="tns:AlternativeWareHouseSOAP">
+      <soap:address location="http://localhost:8082/AlternativeWareHouseService/services/AlternativeWareHouse/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

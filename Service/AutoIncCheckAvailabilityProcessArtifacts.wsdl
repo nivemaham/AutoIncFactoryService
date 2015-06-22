@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://check.autoinc.com" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://www.example.org/WareHouseService/" xmlns:wsdl1="http://www.alternative.com/AlternativeWareHouse/" xmlns:wsdl2="http://service.manufacturing.autoinc.com/ManufacturingService/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AutoIncCheckAvailabilityProcess" targetNamespace="http://check.autoinc.com">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of types participating in this BPEL process 
+     The BPEL Designer will generate default request and response types
+     but you can define or import any XML Schema type and use them as part 
+     of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="Warehouseplt">
+    <plnk:role name="warehouse" portType="wsdl:WareHouseService"/>
+  </plnk:partnerLinkType>
+    <vprop:property name="customerid" type="xsd:string"/>
+    <vprop:propertyAlias messageType="tns:AutoIncCheckAvailabilityProcessRequestMessage" part="payload" propertyName="tns:customerid">
+    <vprop:query><![CDATA[/tns:customerid]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="tns:AutoIncCheckAvailabilityProcessResponseMessage" part="payload" propertyName="tns:customerid">
+    <vprop:query><![CDATA[/tns:customerid]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="wsdl:checkAvailabilityRequest" part="parameters" propertyName="tns:customerid">
+    <vprop:query><![CDATA[/customerId]]></vprop:query>
+  </vprop:propertyAlias>
+    <plnk:partnerLinkType name="AlternativeWHPLT">
+    <plnk:role name="alternativewh" portType="wsdl1:AlternativeWareHouse"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="ManufacturingPLT">
+    <plnk:role name="manufacturer" portType="wsdl2:ManufacturingService"/>
+  </plnk:partnerLinkType>
+    <vprop:propertyAlias messageType="wsdl2:createProductsRequest" part="parameters" propertyName="tns:customerid">
+    <vprop:query><![CDATA[/customerid]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="wsdl:checkAvailabilityResponse" part="parameters" propertyName="tns:customerid">
+    <vprop:query><![CDATA[/customerId]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="wsdl2:createProductsResponse" part="parameters" propertyName="tns:customerid">
+    <vprop:query><![CDATA[/customerid]]></vprop:query>
+  </vprop:propertyAlias>
+    <import location="WareHouseService.wsdl" namespace="http://www.example.org/WareHouseService/"/>
+    <import location="AlternativeWareHouse.wsdl" namespace="http://www.alternative.com/AlternativeWareHouse/"/>
+    <import location="ManufacturingService.wsdl" namespace="http://service.manufacturing.autoinc.com/ManufacturingService/"/>
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://check.autoinc.com">
+
+            <element name="AutoIncCheckAvailabilityProcessRequest">
+                <complexType>
+                    <sequence>
+                    	<element name="productId" type="int"/>
+                    	<element name="quantity" type="int"/>
+                    	<element name="customerid" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="AutoIncCheckAvailabilityProcessResponse">
+                <complexType>
+                    <sequence>
+                    	<element name="isAvailable" type="boolean"/>
+                    	<element name="availabilityType" type="string">
+                    	</element>
+                    	<element name="customerid" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="processFault">
+            	<complexType>
+            		<sequence>
+
+            			<element name="processFault" type="string"></element>
+            		</sequence>
+            	</complexType>
+            </element>
+        </schema>
+    </types>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="AutoIncCheckAvailabilityProcessRequestMessage">
+        <part element="tns:AutoIncCheckAvailabilityProcessRequest" name="payload"/>
+    </message>
+    <message name="AutoIncCheckAvailabilityProcessResponseMessage">
+        <part element="tns:AutoIncCheckAvailabilityProcessResponse" name="payload"/>
+    </message>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+
+    <!-- portType implemented by the AutoIncCheckAvailabilityProcess BPEL process -->
+    <message name="processFault">
+    	<part name="parameters" element="tns:processFault"></part>
+    </message>
+    <portType name="AutoIncCheckAvailabilityProcess">
+        <operation name="process">
+            <input message="tns:AutoIncCheckAvailabilityProcessRequestMessage"/>
+            <output message="tns:AutoIncCheckAvailabilityProcessResponseMessage"/>
+            <fault name="fault" message="tns:processFault"></fault>
+        </operation>
+    </portType>   
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="AutoIncCheckAvailabilityProcess">
+        <plnk:role name="AutoIncCheckAvailabilityProcessProvider" portType="tns:AutoIncCheckAvailabilityProcess"/>
+    </plnk:partnerLinkType>
+    
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     BINDING DEFINITION - Defines the message format and protocol details
+     for a web service.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <binding name="AutoIncCheckAvailabilityProcessBinding"
+    	type="tns:AutoIncCheckAvailabilityProcess">
+
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<operation name="process">
+
+    		<soap:operation
+    			soapAction="http://check.autoinc.com/process" />
+    		<input>
+
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+
+    			<soap:body use="literal" />
+    		</output>
+    		<fault name="fault">
+    			<soap:fault use="literal" name="fault" />
+    		</fault>
+    	</operation>
+    </binding>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     SERVICE DEFINITION - A service groups a set of ports into
+     a service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <service name="AutoIncCheckAvailabilityProcessService">
+    	<port binding="tns:AutoIncCheckAvailabilityProcessBinding" name="AutoIncCheckAvailabilityProcessPort">
+    		<soap:address location="http://localhost:8080/ode/processes/AutoIncCheckAvailabilityProcess"/>
+    	</port>
+    </service>
+</definitions>

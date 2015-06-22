@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://process.order.autoinc.com/AutoIncOrderProcess/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AutoIncOrderProcess" targetNamespace="http://process.order.autoinc.com/AutoIncOrderProcess/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://process.order.autoinc.com/AutoIncOrderProcess/">
+      <xsd:element name="findCheapestSupplier">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="preferencess" type="xsd:string" />
+          	<xsd:element name="customerid" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="findCheapestSupplierResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="supplierId" type="xsd:int" />
+          	<xsd:element name="transportationCost" type="xsd:float"></xsd:element>
+          	<xsd:element name="customerid" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="showtotalCost">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="productId" type="xsd:int"></xsd:element>
+      			<xsd:element name="transportationcost"
+      				type="xsd:float">
+      			</xsd:element>
+      			<xsd:element name="quantity" type="xsd:int"></xsd:element>
+      			<xsd:element name="customerid" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="showtotalCostResponse">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="totalCost" type="xsd:double"></xsd:element>
+      			<xsd:element name="customerid" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="registerCustomer">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="userId" type="xsd:int"></xsd:element>
+      			<xsd:element name="customerName" type="xsd:string"></xsd:element>
+      			<xsd:element name="contactNo" type="xsd:int"></xsd:element>
+      			<xsd:element name="city" type="xsd:string"></xsd:element>
+      			<xsd:element name="country" type="xsd:string"></xsd:element>
+      			<xsd:element name="zipcode" type="xsd:string"></xsd:element>
+      			<xsd:element name="addline1" type="xsd:string"></xsd:element>
+      			<xsd:element name="addline2" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="registerCustomerResponse"
+      	type="tns:Customer">
+
+      </xsd:element>
+      <xsd:element name="registerUser">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="email" type="xsd:string"></xsd:element>
+      			<xsd:element name="role" type="xsd:string"></xsd:element>
+      			<xsd:element name="username" type="xsd:string"></xsd:element>
+      			<xsd:element name="password" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="registerUserResponse" type="tns:User">
+
+      </xsd:element>
+
+      <xsd:complexType name="Customer">
+      	<xsd:sequence>
+      		<xsd:element name="userId" type="xsd:int"></xsd:element>
+      		<xsd:element name="name" type="xsd:string"></xsd:element>
+      		<xsd:element name="addressId" type="tns:address"></xsd:element>
+      		<xsd:element name="contactnum" type="xsd:int"></xsd:element>
+      		<xsd:element name="customerid" type="xsd:int"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+    
+      <xsd:complexType name="address">
+      	<xsd:sequence>
+      		<xsd:element name="addressId" type="xsd:int"></xsd:element>
+      		<xsd:element name="addressline1" type="xsd:string"></xsd:element>
+      		<xsd:element name="addressline2" type="xsd:string" minOccurs="0"></xsd:element>
+      		<xsd:element name="city" type="xsd:string"></xsd:element>
+      		<xsd:element name="country" type="xsd:string"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="createOrder">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="customerId" type="xsd:int"></xsd:element>
+      			<xsd:element name="productId" type="xsd:int"></xsd:element>
+      			<xsd:element name="supplierId" type="xsd:int"></xsd:element>
+      			<xsd:element name="totalCost" type="xsd:double"></xsd:element>
+      			<xsd:element name="quantity" type="xsd:int"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createOrderResponse" type="tns:Order">
+
+      </xsd:element>
+
+      <xsd:complexType name="Order">
+      	<xsd:sequence>
+      		<xsd:element name="orderId" type="xsd:int"></xsd:element>
+      		<xsd:element name="customerid" type="tns:Customer"></xsd:element>
+      		<xsd:element name="supplier" type="xsd:int"></xsd:element>
+      		<xsd:element name="orderStatus" type="xsd:string"></xsd:element>
+      		<xsd:element name="product" type="tns:Product"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+    
+      <xsd:complexType name="Product">
+      	<xsd:sequence>
+      		<xsd:element name="productid" type="xsd:int"></xsd:element>
+      		<xsd:element name="modelNumber" type="xsd:string"></xsd:element>
+      		<xsd:element name="imageurl" type="xsd:string"></xsd:element>
+      		<xsd:element name="manufacturer" type="xsd:string"></xsd:element>
+      		<xsd:element name="brand" type="xsd:string"></xsd:element>
+      		<xsd:element name="price" type="xsd:int"></xsd:element>
+      		<xsd:element name="color" type="xsd:string"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="AutoIncOrderException">
+      	<xsd:sequence>
+      		<xsd:element name="error" type="xsd:string"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+            <xsd:element name="AutoIncOrderFault" type="tns:AutoIncOrderException"></xsd:element>
+        
+            <xsd:complexType name="User">
+            	<xsd:sequence>
+            		<xsd:element name="email" type="xsd:string"></xsd:element>
+            		<xsd:element name="username" type="xsd:string"></xsd:element>
+            		<xsd:element name="password" type="xsd:string"></xsd:element>
+            		<xsd:element name="role" type="xsd:string"></xsd:element>
+            		<xsd:element name="id" type="xsd:int"></xsd:element>
+            	</xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="updateOrderStatus">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="orderId" type="xsd:int"></xsd:element>
+            			<xsd:element name="orderToken"
+            				type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="updateOrderStatusResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="currentStatus"
+            				type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="orderToken"
+            				type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="updateOrderStatusFault">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="updateOrderStatusFault"
+            				type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="cancelOrder">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="orderId" type="xsd:string"></xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="cancelOrderResponse">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="updatedOrder"
+            				type="tns:Order">
+            			</xsd:element>
+            			<xsd:element name="cancleStatus"
+            				type="xsd:string">
+            			</xsd:element>
+            			<xsd:element name="orderid"
+            				type="xsd:string">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="updateOrder">
+            	<xsd:complexType>
+            		<xsd:sequence>
+
+            			<xsd:element name="customerid"
+            				type="xsd:int">
+            			</xsd:element>
+            			<xsd:element name="productid"
+            				type="xsd:int">
+            			</xsd:element>
+            			<xsd:element name="quantity"
+            				type="xsd:int">
+            			</xsd:element>
+            			<xsd:element name="supplierid"
+            				type="xsd:int">
+            			</xsd:element>
+            			<xsd:element name="totalcost"
+            				type="xsd:float">
+            			</xsd:element>
+            			<xsd:element name="orderid"
+            				type="xsd:int">
+            			</xsd:element>
+            		</xsd:sequence>
+            	</xsd:complexType>
+            </xsd:element>
+            <xsd:element name="updateOrderResponse" type="tns:Order">
+            </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="findCheapestSupplierRequest">
+    <wsdl:part element="tns:findCheapestSupplier" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="findCheapestSupplierResponse">
+    <wsdl:part element="tns:findCheapestSupplierResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="showtotalCostRequest">
+  	<wsdl:part name="parameters" element="tns:showtotalCost"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="showtotalCostResponse">
+  	<wsdl:part name="parameters" element="tns:showtotalCostResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findCheapestSupplierFault">
+  	<wsdl:part name="parameters" element="tns:AutoIncOrderFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="showtotalCostFault">
+  	<wsdl:part name="parameters" element="tns:AutoIncOrderFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerCustomerRequest">
+  	<wsdl:part name="parameters" element="tns:registerCustomer"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerCustomerResponse">
+  	<wsdl:part name="parameters" element="tns:registerCustomerResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerUserRequest">
+  	<wsdl:part name="parameters" element="tns:registerUser"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerUserResponse">
+  	<wsdl:part name="parameters" element="tns:registerUserResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createOrderRequest">
+  	<wsdl:part name="parameters" element="tns:createOrder"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createOrderResponse">
+  	<wsdl:part name="parameters" element="tns:createOrderResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createOrderFault">
+  	<wsdl:part name="parameters" element="tns:AutoIncOrderFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerUserFault">
+  	<wsdl:part name="parameters" element="tns:AutoIncOrderFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerCustomerFault">
+  	<wsdl:part name="parameters" element="tns:AutoIncOrderFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateOrderStatusRequest">
+  	<wsdl:part name="parameters" element="tns:updateOrderStatus"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateOrderStatusResponse">
+  	<wsdl:part name="parameters" element="tns:updateOrderStatusResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateOrderStatusFault">
+  	<wsdl:part name="parameters" element="tns:AutoIncOrderFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelOrderRequest">
+  	<wsdl:part name="parameters" element="tns:cancelOrder"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelOrderResponse">
+  	<wsdl:part name="parameters" element="tns:cancelOrderResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateOrderRequest">
+  	<wsdl:part name="parameters" element="tns:updateOrder"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateOrderResponse">
+  	<wsdl:part name="parameters" element="tns:updateOrderResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AutoIncOrderProcess">
+    <wsdl:operation name="findCheapestSupplier">
+      <wsdl:input message="tns:findCheapestSupplierRequest"/>
+      <wsdl:output message="tns:findCheapestSupplierResponse"/>
+            <wsdl:fault name="fault" message="tns:findCheapestSupplierFault"></wsdl:fault>
+        </wsdl:operation>
+    <wsdl:operation name="showtotalCost">
+    	<wsdl:input message="tns:showtotalCostRequest"></wsdl:input>
+    	<wsdl:output message="tns:showtotalCostResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:showtotalCostFault"></wsdl:fault>
+        </wsdl:operation>
+    <wsdl:operation name="registerCustomer">
+    	<wsdl:input message="tns:registerCustomerRequest"></wsdl:input>
+    	<wsdl:output message="tns:registerCustomerResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:registerCustomerFault"></wsdl:fault>
+        </wsdl:operation>
+    <wsdl:operation name="registerUser">
+    	<wsdl:input message="tns:registerUserRequest"></wsdl:input>
+    	<wsdl:output message="tns:registerUserResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:registerUserFault"></wsdl:fault>
+        </wsdl:operation>
+    <wsdl:operation name="createOrder">
+    	<wsdl:input message="tns:createOrderRequest"></wsdl:input>
+    	<wsdl:output message="tns:createOrderResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:createOrderFault"></wsdl:fault>
+        </wsdl:operation>
+    <wsdl:operation name="updateOrderStatus">
+    	<wsdl:input message="tns:updateOrderStatusRequest"></wsdl:input>
+    	<wsdl:output message="tns:updateOrderStatusResponse"></wsdl:output>
+            <wsdl:fault name="fault" message="tns:updateOrderStatusFault"></wsdl:fault>
+        </wsdl:operation>
+    <wsdl:operation name="cancelOrder">
+    	<wsdl:input message="tns:cancelOrderRequest"></wsdl:input>
+    	<wsdl:output message="tns:cancelOrderResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateOrder">
+    	<wsdl:input message="tns:updateOrderRequest"></wsdl:input>
+    	<wsdl:output message="tns:updateOrderResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AutoIncOrderProcessSOAP"
+  	type="tns:AutoIncOrderProcess">
+
+  	<soap:binding style="document"
+  		transport="http://schemas.xmlsoap.org/soap/http" />
+  	<wsdl:operation name="findCheapestSupplier">
+
+  		<soap:operation
+  			soapAction="http://process.order.autoinc.com/AutoIncOrderProcess/findCheapestSupplier" />
+  		<wsdl:input>
+
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  		<wsdl:fault name="fault">
+
+  			<soap:fault use="literal" name="fault" />
+  		</wsdl:fault>
+  	</wsdl:operation>
+  	<wsdl:operation name="showtotalCost">
+
+  		<soap:operation
+  			soapAction="http://process.order.autoinc.com/AutoIncOrderProcess/showtotalCost" />
+  		<wsdl:input>
+
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  		<wsdl:fault name="fault">
+
+  			<soap:fault use="literal" name="fault" />
+  		</wsdl:fault>
+  	</wsdl:operation>
+  	<wsdl:operation name="registerCustomer">
+
+  		<soap:operation
+  			soapAction="http://process.order.autoinc.com/AutoIncOrderProcess/registerCustomer" />
+  		<wsdl:input>
+
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  		<wsdl:fault name="fault">
+
+  			<soap:fault use="literal" name="fault" />
+  		</wsdl:fault>
+  	</wsdl:operation>
+  	<wsdl:operation name="registerUser">
+
+  		<soap:operation
+  			soapAction="http://process.order.autoinc.com/AutoIncOrderProcess/registerUser" />
+  		<wsdl:input>
+
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  		<wsdl:fault name="fault">
+
+  			<soap:fault use="literal" name="fault" />
+  		</wsdl:fault>
+  	</wsdl:operation>
+  	<wsdl:operation name="createOrder">
+
+  		<soap:operation
+  			soapAction="http://process.order.autoinc.com/AutoIncOrderProcess/createOrder" />
+  		<wsdl:input>
+
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  		<wsdl:fault name="fault">
+
+  			<soap:fault use="literal" name="fault" />
+  		</wsdl:fault>
+  	</wsdl:operation>
+  	<wsdl:operation name="updateOrderStatus">
+
+  		<soap:operation
+  			soapAction="http://process.order.autoinc.com/AutoIncOrderProcess/updateOrderStatus" />
+  		<wsdl:input>
+
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  		<wsdl:fault name="fault">
+
+  			<soap:fault use="literal" name="fault" />
+  		</wsdl:fault>
+  	</wsdl:operation>
+  	<wsdl:operation name="cancelOrder">
+  		<soap:operation
+  			soapAction="http://process.order.autoinc.com/AutoIncOrderProcess/cancelOrder" />
+  		<wsdl:input>
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="updateOrder">
+  		<soap:operation
+  			soapAction="http://process.order.autoinc.com/AutoIncOrderProcess/updateOrder" />
+  		<wsdl:input>
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  	</wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AutoIncOrderProcess">
+    <wsdl:port binding="tns:AutoIncOrderProcessSOAP" name="AutoIncOrderProcessSOAP">
+      <soap:address location="http://localhost:8081/AutoIncFactoryService/services/OrderService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

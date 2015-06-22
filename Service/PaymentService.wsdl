@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="PaymentService" targetNamespace="http://servicepayment.autoinc.com/PaymentService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://servicepayment.autoinc.com/PaymentService/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.example.org/PaymentServiceSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://servicepayment.autoinc.com/PaymentService/" xmlns:pref="http://www.example.org/PaymentServiceSchema">
+    	<xsd:import namespace="http://www.example.org/PaymentServiceSchema" schemaLocation="PaymentServiceSchema.xsd"/>
+    	<xsd:element name="confirmPayment">
+    		<xsd:complexType>
+    			<xsd:sequence>
+    				<xsd:element name="in" type="xsd:string"/>
+    			</xsd:sequence>
+    		</xsd:complexType>
+    	</xsd:element>
+    	<xsd:element name="confirmPaymentResponse">
+    		<xsd:complexType>
+    			<xsd:sequence>
+    				<xsd:element name="out" type="xsd:string"/>
+    			</xsd:sequence>
+    		</xsd:complexType>
+    	</xsd:element>
+    	<xsd:element name="confirmPaymentFault">
+    		<xsd:complexType>
+    			<xsd:sequence>
+
+    				<xsd:element name="confirmPaymentFault" type="xsd:string">
+    				</xsd:element>
+    			</xsd:sequence>
+    		</xsd:complexType>
+    	</xsd:element>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    	<xsd:import namespace="http://www.example.org/PaymentServiceSchema" schemaLocation="PaymentServiceSchema.xsd">
+    	</xsd:import></xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="confirmPaymentResponse">
+    <wsdl:part name="parameters" element="xsd1:PaymentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="confirmPaymentFault">
+    <wsdl:part name="parameters" element="tns:confirmPaymentFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="confirmPaymentRequest">
+    <wsdl:part name="parameters" element="xsd1:PaymentDetailInput">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PaymentService">
+    <wsdl:operation name="confirmPayment">
+      <wsdl:input message="tns:confirmPaymentRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:confirmPaymentResponse">
+    </wsdl:output>
+      <wsdl:fault name="paymentfault" message="tns:confirmPaymentFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PaymentServiceSOAP" type="tns:PaymentService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="confirmPayment">
+      <soap:operation soapAction="http://servicepayment.autoinc.com/PaymentService/confirmPayment"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="paymentfault">
+        <soap:fault name="paymentfault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PaymentService">
+    <wsdl:port name="PaymentServiceSOAP" binding="tns:PaymentServiceSOAP">
+      <soap:address location="http://localhost:8085/PaymentService2/services/PaymentService/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

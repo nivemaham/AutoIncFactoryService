@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.org/AutoIncFactoryServiceSN" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.example.org/AutoIncFactoryServiceSN">
+    <complexType name="showProductResp">
+        <sequence>
+            <element name="product" type="tns:Product"/>
+        </sequence>
+    </complexType>
+    <complexType name="Product">
+        <sequence>
+            <element name="id" type="int"/>
+            <element name="modelnumber" type="string"/>
+            <element name="imageurl" type="string"/>
+            <element name="manufacturer" type="string"/>
+            <element name="brand" type="string"/>
+            <element name="price" type="int"/>
+            <element name="color" type="string"/>
+        </sequence>
+    </complexType>
+    <element name="showProductRespEle" type="tns:showProductResp"/>
+    <complexType name="viewProductDetailsInp">
+        <sequence>
+            <element name="productId" type="int"/>
+        </sequence>
+    </complexType>
+    <element name="viewProductDetailsInpEle" type="tns:viewProductDetailsInp"/>
+    <complexType name="viewProductDetailsResp"/>
+    <complexType name="ProductDetails">
+        <sequence>
+            <element name="product" type="tns:Product"/>
+            <element name="engine" type="string"/>
+            <element name="type" type="string"/>
+            <element name="bodyStyle" type="string"/>
+            <element name="mileage" type="int"/>
+        </sequence>
+    </complexType>
+    <element name="viewProductDetailsRespEle" type="tns:viewProductDetailsResp"/>
+    <complexType name="checkProductAvailablityInp">
+        <sequence>
+            <element name="productId" type="int"/>
+            <element name="deliveryLocation" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="findClosestWarehouseInp">
+        <sequence>
+            <element name="preference" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="findClosestWarehouseResp">
+        <sequence>
+            <element name="warehouse" type="int"/>
+            <element name="serviceUrl" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="Warehouse">
+        <sequence>
+            <element name="id" type="int"/>
+            <element name="address" type="tns:Address"/>
+            <element name="capacity" type="int"/>
+            <element name="serviceUrl" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="Address">
+        <sequence>
+            <element name="id" type="int"/>
+            <element name="addLine1" type="string"/>
+            <element name="addLine2" type="string"/>
+            <element name="city" type="string"/>
+            <element name="country" type="string"/>
+            <element name="zipcode" type="string"/>
+        </sequence>
+    </complexType>
+    <element name="findClosestWarehouseInpEle" type="tns:findClosestWarehouseInp"/>
+    <element name="findClosestWarehouseRespEle" type="tns:findClosestWarehouseResp"/>
+    <complexType name="findAlternativeWarehouseInp">
+        <sequence>
+            <element name="warehouse" type="tns:Warehouse"/>
+        </sequence>
+    </complexType>
+    <complexType name="findAlternativeWarehouseResp">
+        <sequence>
+            <element name="warehouse2" type="tns:Warehouse"/>
+        </sequence>
+    </complexType>
+    <element name="findAlternativeWarehouseInpEle" type="tns:findAlternativeWarehouseInp"/>
+    <element name="findAlternativeWarehouseRespEle" type="tns:findAlternativeWarehouseResp"/>
+    <complexType name="registerCustomerInp">
+        <sequence>
+            <element name="userId" type="int"/>
+            <element name="name" type="string"/>
+            <element name="contactNo" type="int"/>
+            <element name="city" type="string"/>
+            <element name="country" type="string"/>
+            <element name="zipcode" type="string"/>
+            <element name="addLine1" type="string"/>
+            <element name="addLine2" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="registerUserInp">
+        <sequence>
+            <element name="user" type="tns:User"/>
+        </sequence>
+    </complexType>
+    <complexType name="registerUserResp">
+        <sequence>
+            <element name="result" type="boolean"/>
+        </sequence>
+    </complexType>
+    <complexType name="User">
+        <sequence>
+            <element name="id" type="int"/>
+            <element name="emailAddress" type="string"/>
+            <element name="role" type="string"/>
+            <element name="userName" type="string"/>
+            <element name="password" type="string"/>
+        </sequence>
+    </complexType>
+    <element name="registerUserInpEle" type="tns:registerUserInp"/>
+    <element name="registerUserRespEle" type="tns:registerUserResp"/>
+    <complexType name="registerCustomerResp">
+        <sequence>
+            <element name="customer" type="tns:Customer"/>
+        </sequence>
+    </complexType>
+    <complexType name="Customer">
+        <sequence>
+            <element name="id" type="int"/>
+            <element name="user" type="tns:User"/>
+            <element name="name" type="string"/>
+            <element name="address" type="tns:Address"/>
+            <element name="contactNumber" type="int"/>
+        </sequence>
+    </complexType>
+    <element name="registerCustomerInpEle" type="tns:registerCustomerInp"/>
+    <element name="registerCustomerRespEle" type="tns:registerCustomerResp"/>
+    <element name="displayTotalCostInpEle" type="tns:displayTotalCostInp"/>
+    <complexType name="displayTotalCostInp">
+        <sequence>
+            <element name="productId" type="int"/>
+            <element name="supplierId" type="int"/>
+            <element name="serviceLevel" type="string"/>
+        </sequence>
+    </complexType>
+    <simpleType name="displayTotalCostResp">
+        <restriction base="float"/>
+    </simpleType>
+    <element name="displayTotalCostRespEle" type="tns:displayTotalCostResp"/>
+    <complexType name="reserveProductInp">
+        <sequence>
+            <element name="productId" type="int"/>
+            <element name="warehouseId" type="int"/>
+        </sequence>
+    </complexType>
+    <simpleType name="reserveProductResp">
+        <restriction base="boolean"/>
+    </simpleType>
+    <element name="reserveProductInpEle" type="tns:reserveProductInp"/>
+    <element name="reserveProductRespEle" type="tns:reserveProductResp"/>
+</schema>

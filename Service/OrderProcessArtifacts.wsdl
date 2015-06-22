@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:p="http://www.w3.org/2001/XMLSchema" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://order.autoinc.com" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://process.order.autoinc.com/AutoIncOrderProcess/" xmlns:wsdl1="http://www.example.org/WareHouseService/" xmlns:wsdl2="http://supplier.autoinc.com/SupplyService/" xmlns:wsdl3="http://servicepayment.autoinc.com/PaymentService/" xmlns:wsdl4="http://check.autoinc.com" xmlns:xsd="http://www.example.org/PaymentServiceSchema" name="OrderProcess" targetNamespace="http://order.autoinc.com">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of types participating in this BPEL process 
+     The BPEL Designer will generate default request and response types
+     but you can define or import any XML Schema type and use them as part 
+     of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="FactoryPLT">
+    <plnk:role name="Factory" portType="wsdl:AutoIncOrderProcess"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="WareHousePLT">
+    <plnk:role name="warehouse" portType="wsdl1:WareHouseService"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="SupplyPLT">
+    <plnk:role name="supplier" portType="wsdl2:SupplyService"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="PaymentProviderPLT">
+    <plnk:role name="paymentProvider" portType="wsdl3:PaymentService"/>
+  </plnk:partnerLinkType>
+    <vprop:property name="orderid" type="p:string"/>
+    <vprop:propertyAlias messageType="wsdl1:reserveProductRequest" part="parameters" propertyName="tns:orderid">
+    <vprop:query><![CDATA[/orderid]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="wsdl1:reserveProductResponse" part="parameters" propertyName="tns:orderid">
+    <vprop:query><![CDATA[/orderid]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="wsdl2:confirmTransportationRequest" part="parameters" propertyName="tns:orderid">
+    <vprop:query><![CDATA[/orderToken]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="wsdl2:confirmTransportationResponse" part="parameters" propertyName="tns:orderid">
+    <vprop:query><![CDATA[/orderId]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="wsdl3:confirmPaymentRequest" part="parameters" propertyName="tns:orderid">
+    <vprop:query><![CDATA[/xsd:orderid]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="wsdl3:confirmPaymentResponse" part="parameters" propertyName="tns:orderid">
+    <vprop:query><![CDATA[/xsd:orderId]]></vprop:query>
+  </vprop:propertyAlias>
+    <plnk:partnerLinkType name="AvailabilityPLT">
+    <plnk:role name="availabilitychecker" portType="wsdl4:AutoIncCheckAvailabilityProcess"/>
+  </plnk:partnerLinkType>
+    <import location="AutoIncOrderProcess.wsdl" namespace="http://process.order.autoinc.com/AutoIncOrderProcess/"/>
+    <import location="WareHouseService.wsdl" namespace="http://www.example.org/WareHouseService/"/>
+    <import location="SupplyService.wsdl" namespace="http://supplier.autoinc.com/SupplyService/"/>
+    <import location="PaymentService.wsdl" namespace="http://servicepayment.autoinc.com/PaymentService/"/>
+    <import location="AutoIncCheckAvailabilityProcessArtifacts.wsdl" namespace="http://check.autoinc.com"/>
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://order.autoinc.com">
+
+            <element name="OrderProcessRequest">
+                <complexType>
+                    <sequence>
+                    	<element name="productId" type="int"/>
+                    	<element name="quantity" type="int"/>
+                    	<element name="preference" type="string"/>
+                    	<element name="customerid" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="OrderProcessResponse" type="tns:OrderProcessResponseType">
+
+            </element>
+            <element name="executeOrderConfirmation">
+            	<complexType>
+            		<sequence>
+
+            			<element name="customerid" type="int"/>
+            			<element name="productid" type="int"/>
+            			<element name="supplierid" type="int"/>
+            			<element name="quantity" type="int"/>
+            			<element name="totalcost" type="double"/>
+            		</sequence>
+            	</complexType>
+            </element>
+           
+            
+          
+        
+            <complexType name="Customer">
+            	<sequence>
+            		<element name="customerid" type="int"/>
+            		<element name="address" type="tns:Address"/>
+            		<element name="name" type="string"/>
+            		<element name="contactnum" type="int"/>
+            		<element name="userid" type="int"/>
+            	</sequence>
+            </complexType>
+        
+            <complexType name="Address">
+            	<sequence>
+            		<element name="addressid" type="int"/>
+            		<element name="addline1" type="string"/>
+            		<element maxOccurs="1" minOccurs="0" name="addline2" type="string"/>
+            		<element name="country" type="string"/>
+            		<element name="city" type="string"/>
+            	</sequence>
+            </complexType>
+        
+            <complexType name="Order">
+            	<sequence>
+            		<element name="orderid" type="int"/>
+            		<element name="customer" type="tns:Customer"/>
+            		<element name="supplierid" type="int"/>
+            		<element name="orderstatus" type="string"/>
+            		<element name="productid" type="int"/>
+            	</sequence>
+            </complexType>
+        
+        
+            <complexType name="OrderProcessResponseType">
+            	<sequence>
+            		<element name="customerid" type="string"/>
+            		<element name="supplierid" type="int"/>
+            		<element name="totalcost" type="double"/>
+            	</sequence>
+            </complexType>
+            <element name="confirmOrder">
+            	<complexType>
+            		<sequence>
+
+            			<element name="customerid" type="int"/>
+            			<element name="supplierid" type="int"/>
+            			<element name="productid" type="int"/>
+            			<element name="quantity" type="int"/>
+            			<element name="totalCost" type="double"/>
+            			<element name="paymentmethod" type="string"/>
+            			<element name="cardnumber" type="string"/>
+            		</sequence>
+            	</complexType>
+            </element>
+            <element name="confirmOrderResponse">
+            	<complexType>
+            		<sequence>
+
+            			<element name="orderid" type="int"/>
+            			<element name="orderstatus" type="string"/>
+            			<element name="supplier" type="int"/>
+            			<element name="customerid" type="int"/>
+            			<element name="productid" type="int"/>
+            			<element name="productReserved" type="boolean">
+            			</element>
+            			<element name="isTranportConfirmed" type="string">
+            			</element>
+            			<element name="isPaymentConfirmed" type="string"/>
+            			<element name="invoicenumber" type="string"/>
+            		</sequence>
+            	</complexType>
+            </element>
+            <element name="confirmOrderFault">
+            	<complexType>
+            		<sequence>
+
+            			<element name="confirmOrderFault" type="string">
+            			</element>
+            		</sequence>
+            	</complexType>
+            </element>
+            <element name="processFault">
+            	<complexType>
+            		<sequence>
+
+            			<element name="processFault" type="string"/>
+            		</sequence>
+            	</complexType>
+            </element>
+            <element name="checkAvailability">
+            	<complexType>
+            		<sequence>
+
+            			<element name="productId" type="int"/>
+            			<element name="quantity" type="int"/>
+            			<element name="customerid" type="string"/>
+            		</sequence>
+            	</complexType>
+            </element>
+            <element name="checkAvailabilityResponse">
+            	<complexType>
+            		<sequence>
+
+            			<element name="isAvailable" type="boolean"/>
+            			<element name="availabilityType" type="string">
+            			</element>
+            			<element name="customerid" type="string"/>
+            		</sequence>
+            	</complexType>
+            </element>
+            <element name="checkAvailabilityFault">
+            	<complexType>
+            		<sequence>
+
+            			<element name="checkAvailabilityFault" type="string">
+            			</element>
+            		</sequence>
+            	</complexType>
+            </element>
+        </schema>
+    </types>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="OrderProcessRequestMessage">
+        <part element="tns:OrderProcessRequest" name="payload"/>
+    </message>
+    <message name="OrderProcessResponseMessage">
+        <part element="tns:OrderProcessResponse" name="payload"/>
+    </message>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+
+    <!-- portType implemented by the OrderProcess BPEL process -->
+    <message name="confirmOrderRequest">
+    	<part element="tns:confirmOrder" name="parameters"/>
+    </message>
+    <message name="confirmOrderResponse">
+    	<part element="tns:confirmOrderResponse" name="parameters"/>
+    </message>
+    <message name="confirmOrderFault">
+    	<part element="tns:confirmOrderFault" name="parameters"/>
+    </message>
+    <message name="processFault">
+    	<part element="tns:processFault" name="parameters"/>
+    </message>
+    <message name="checkAvailabilityRequest">
+    	<part element="tns:checkAvailability" name="parameters"/>
+    </message>
+    <message name="checkAvailabilityResponse">
+    	<part element="tns:checkAvailabilityResponse" name="parameters"/>
+    </message>
+    <message name="checkAvailabilityFault">
+    	<part element="tns:checkAvailabilityFault" name="parameters"/>
+    </message>
+    <portType name="OrderProcess">
+        <operation name="process">
+            <input message="tns:OrderProcessRequestMessage"/>
+            <output message="tns:OrderProcessResponseMessage"/>
+            <fault message="tns:processFault" name="fault"/>
+        </operation>
+
+        <operation name="confirmOrder">
+        	<input message="tns:confirmOrderRequest"/>
+        	<output message="tns:confirmOrderResponse"/>
+            <fault message="tns:confirmOrderFault" name="fault"/>
+        </operation>
+        <operation name="checkAvailability">
+        	<input message="tns:checkAvailabilityRequest"/>
+        	<output message="tns:checkAvailabilityResponse"/>
+            <fault message="tns:checkAvailabilityFault" name="fault"/>
+        </operation>
+    </portType>   
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="OrderProcess">
+        <plnk:role name="OrderProcessProvider" portType="tns:OrderProcess"/>
+    </plnk:partnerLinkType>
+    
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     BINDING DEFINITION - Defines the message format and protocol details
+     for a web service.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <binding name="OrderProcessBinding" type="tns:OrderProcess">
+
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    	<operation name="process">
+
+    		<soap:operation soapAction="http://order.autoinc.com/process"/>
+    		<input>
+
+    			<soap:body use="literal"/>
+    		</input>
+    		<output>
+
+    			<soap:body use="literal"/>
+    		</output>
+    		<fault name="fault">
+
+    			<soap:fault name="fault" use="literal"/>
+    		</fault>
+    	</operation>
+    	<operation name="confirmOrder">
+
+    		<soap:operation soapAction="http://order.autoinc.com/confirmOrder"/>
+    		<input>
+
+    			<soap:body use="literal"/>
+    		</input>
+    		<output>
+
+    			<soap:body use="literal"/>
+    		</output>
+    		<fault name="fault">
+
+    			<soap:fault name="fault" use="literal"/>
+    		</fault>
+    	</operation>
+    	<operation name="checkAvailability">
+    		<soap:operation soapAction="http://order.autoinc.com/checkAvailability"/>
+    		<input>
+    			<soap:body use="literal"/>
+    		</input>
+    		<output>
+    			<soap:body use="literal"/>
+    		</output>
+    		<fault name="fault">
+    			<soap:fault name="fault" use="literal"/>
+    		</fault>
+    	</operation>
+    </binding>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     SERVICE DEFINITION - A service groups a set of ports into
+     a service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <service name="OrderProcessService">
+    	<port binding="tns:OrderProcessBinding" name="OrderProcessPort">
+    		<soap:address location="http://localhost:8080/ode/processes/OrderProcess"/>
+    	</port>
+    </service>
+</definitions>
